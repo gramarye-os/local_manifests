@@ -1,7 +1,7 @@
 # LineageOS 23.2 + AOHP (Pixel 6 "oriole", OnePlus 13 "dodge")
 
 > **Full documentation (build, install from the ROM releases, provisioning, known issues) lives in
-> https://github.com/injinj/aohp-lineage** — this file only covers the manifest.
+> https://github.com/gramarye-os/aohp-lineage** — this file only covers the manifest.
 
 Branch `lineage-23.2-aohp` of this repo holds the local manifest that reproduces the tree built on chex
 (`/home/chris/lineage/android`, 2026-10-03/04; reports in `/home/chris/lineage/logs/REPORT-*.md`).
@@ -39,7 +39,7 @@ or `TEMPLATES_TAG=` for the newest), `packages/apps/AOHPDriver/{Android.bp,AOHPD
 stock `AOHPAgentDriver.apk` + `rootfs/alpine.tar.gz` (injinj/AOHPAgentDriver `prebuilts-*` release; not installed on
 the phones but required by Soong analysis). Lineage's default dev platform key is byte-identical to the AOHP tree's, so
 AOHPDriver keeps its platform signature without any key override. Details: `vendor/aohp/README.md` and
-https://github.com/injinj/aohp-lineage/blob/main/docs/build.md.
+https://github.com/gramarye-os/aohp-lineage/blob/main/docs/build.md.
 
 ## Build (exact commands from logs/build-3.sh and logs/build-dodge-1.sh)
 
@@ -59,7 +59,7 @@ m -j10 bacon                       # -> out/target/product/dodge/lineage-23.2-*-
 
 `brunch oriole` / `brunch dodge` is the one-step equivalent of breakfast + `m bacon`. Flashing: fastboot the
 boot images, Lineage recovery → Factory reset → Apply update from ADB → `adb sideload <zip>` — step by step in
-https://github.com/injinj/aohp-lineage/blob/main/docs/install-oriole.md and `docs/install-dodge.md`; the built ROMs are
+https://github.com/gramarye-os/aohp-lineage/blob/main/docs/install-oriole.md and `docs/install-dodge.md`; the built ROMs are
 published as releases there. Build time on chex (32 threads, -j10, CPUQuota 1000 %): oriole ~2.5 h cold, dodge 1 h 53 min.
 
 Updating an already-flashed phone to a newer build: no fastboot step is needed when the boot images did not change —

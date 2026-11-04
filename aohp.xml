@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  LineageOS 23.2 + AOHP local manifest (branch lineage-23.2-aohp of github.com/injinj/local_manifests).
+  LineageOS 23.2 + AOHP local manifest (branch lineage-23.2-aohp of github.com/gramarye-os/local_manifests).
   Use with:  repo init -u https://github.com/LineageOS/android.git -b lineage-23.2
   Copy this file to .repo/local_manifests/aohp.xml, then repo sync.
-  The AOHP-patched projects come from the injinj GitHub forks on branch lineage-23.2-aohp
+  The AOHP-patched projects come from the gramarye-os GitHub forks on branch lineage-23.2-aohp
   (LineageOS lineage-23.2 + aohp-os upstream squash + injinj commits, see README-lineage.md).
 -->
 <manifest>
-  <remote name="injinj" fetch="https://github.com/injinj/" />
+  <remote name="injinj" fetch="https://github.com/gramarye-os/" />
   <remote name="themuppets" fetch="https://github.com/TheMuppets/" />
 
   <!-- ========== AOHP-patched platform projects (injinj forks of the LineageOS repos) ========== -->
@@ -21,7 +21,7 @@
     <linkfile src="tools" dest="build/tools" />
   </project>
 
-  <!-- system/core lives as branch lineage-23.2-aohp on injinj/platform_system_core (the aohp-os fork): GitHub allows
+  <!-- system/core lives as branch lineage-23.2-aohp on gramarye-os/platform_system_core (the aohp-os fork): GitHub allows
        one fork per network per account, LineageOS/android_system_core is in the same aosp-mirror network, and a
        standalone copy is rejected (219 MB libunwindstack test blob in Lineage history > 100 MB limit). -->
   <remove-project name="LineageOS/android_system_core" />
@@ -38,7 +38,7 @@
   <remove-project name="LineageOS/android_packages_apps_Launcher3" />
   <project path="packages/apps/Launcher3" name="android_packages_apps_Launcher3" remote="injinj" revision="lineage-23.2-aohp" groups="pdk-fs,sysui-studio,pdk-cw-tvc" />
 
-  <!-- ========== AOHP product fragment (private repo: needs GitHub auth with access to injinj) ========== -->
+  <!-- ========== AOHP product fragment (private repo: needs GitHub auth with access to gramarye-os) ========== -->
   <project path="vendor/aohp" name="android_vendor_aohp" remote="injinj" revision="lineage-23.2-aohp" />
 
   <!-- ========== AOHP payload sources (AOHPAgentDriver: Android.bp for aohp-rootfs-debian/alpine, privapp perms).
