@@ -30,6 +30,11 @@
   <remove-project name="LineageOS/android_system_sepolicy" />
   <project path="system/sepolicy" name="android_system_sepolicy" remote="injinj" revision="lineage-23.2-aohp" groups="pdk" />
 
+  <!-- kernel/configs: drops the CONFIG_SYSVIPC=n VINTF requirement (v/android-6.6), needed for the
+       SysV IPC kernel config on dodge (aohp.config). Without it check_vintf_compatible fails. -->
+  <remove-project name="LineageOS/android_kernel_configs" />
+  <project path="kernel/configs" name="android_kernel_configs" remote="injinj" revision="lineage-23.2-aohp" groups="vts,pdk" />
+
   <remove-project name="LineageOS/android_frameworks_base" />
   <project path="frameworks/base" name="android_frameworks_base" remote="injinj" revision="lineage-23.2-aohp" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
 
