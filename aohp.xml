@@ -35,6 +35,21 @@
   <remove-project name="LineageOS/android_kernel_configs" />
   <project path="kernel/configs" name="android_kernel_configs" remote="injinj" revision="lineage-23.2-aohp" groups="vts,pdk" />
 
+  <!-- Qualcomm vendor sepolicy: exempt aohp_container_daemon from the xdsp/qdsp device neverallows so
+       the daemon can reach the Hexagon NPU over FastRPC (HTP llama-server). One branch per chip. -->
+  <remove-project name="LineageOS/android_device_qcom_sepolicy_vndr" path="device/qcom/sepolicy_vndr/sm8550" />
+  <project path="device/qcom/sepolicy_vndr/sm8550" name="android_device_qcom_sepolicy_vndr" remote="injinj" revision="lineage-23.2-caf-sm8550-aohp" groups="qcom,kailua-vendor" />
+  <remove-project name="LineageOS/android_device_qcom_sepolicy_vndr" path="device/qcom/sepolicy_vndr/sm8650" />
+  <project path="device/qcom/sepolicy_vndr/sm8650" name="android_device_qcom_sepolicy_vndr" remote="injinj" revision="lineage-23.2-caf-sm8650-aohp" groups="qcom,lanai-vendor" />
+  <remove-project name="LineageOS/android_device_qcom_sepolicy_vndr" path="device/qcom/sepolicy_vndr/sm8750" />
+  <project path="device/qcom/sepolicy_vndr/sm8750" name="android_device_qcom_sepolicy_vndr" remote="injinj" revision="lineage-23.2-caf-sm8750-aohp" groups="qcom,pakala-vendor" />
+
+  <!-- Contacts and Etar: read-only AppFunctions for the agent (findContacts/getContact, findEvents/getEvent/listCalendars). -->
+  <remove-project name="LineageOS/android_packages_apps_Contacts" />
+  <project path="packages/apps/Contacts" name="android_packages_apps_Contacts" remote="injinj" revision="lineage-23.2-aohp" groups="pdk-fs" />
+  <remove-project name="LineageOS/android_packages_apps_Etar" />
+  <project path="packages/apps/Etar" name="android_packages_apps_Etar" remote="injinj" revision="lineage-23.2-aohp" />
+
   <remove-project name="LineageOS/android_frameworks_base" />
   <project path="frameworks/base" name="android_frameworks_base" remote="injinj" revision="lineage-23.2-aohp" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
 
