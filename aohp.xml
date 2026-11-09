@@ -103,7 +103,10 @@
   <!-- ingot carries the +3-line lineage_ingot.mk inherit of vendor/aohp/aohp.mk -->
   <project path="device/osom/ingot" name="android_device_osom_ingot" remote="injinj" revision="lineage-23.2-aohp" />
   <!-- kernel built from source in-tree (TARGET_KERNEL_SOURCE := kernel/osom/sm8475, GKI 5.10) -->
-  <project path="kernel/osom/sm8475" name="LineageOS/android_kernel_osom_sm8475" remote="github" revision="lineage-23.2" clone-depth="1" />
+  <!-- kernel forked for vendor/aohp.config (SysV IPC, POSIX mqueue, IPC/PID/USER namespaces, cgroup device/pids, nf_tables, bridge netfilter),
+       appended to TARGET_KERNEL_CONFIG in device/osom/ingot BoardConfig.mk fbf912b -->
+  <remove-project name="LineageOS/android_kernel_osom_sm8475" path="kernel/osom/sm8475" />
+  <project path="kernel/osom/sm8475" name="android_kernel_osom_sm8475" remote="injinj" revision="lineage-23.2-aohp" clone-depth="1" />
   <project path="kernel/osom/sm8475-devicetrees" name="LineageOS/android_kernel_osom_sm8475-devicetrees" remote="github" revision="lineage-23.2" clone-depth="1" />
   <project path="kernel/osom/sm8475-modules" name="LineageOS/android_kernel_osom_sm8475-modules" remote="github" revision="lineage-23.2" clone-depth="1" />
   <!-- Vendor blobs (device.mk: vendor/osom/ingot/ingot-vendor.mk) -->
