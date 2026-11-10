@@ -1,0 +1,65 @@
+From fd24806d7f70521068674ade0b2f245b652bc8bc Mon Sep 17 00:00:00 2001
+From: Chris Anderson <chris@raitechnology.com>
+Date: Mon, 9 Nov 2026 20:03:03 -0800
+Subject: [PATCH 1/2] overlayfs: accept non-casefolded dentries on a
+ casefold-capable fs
+
+Android formats userdata with the f2fs casefold feature; with CONFIG_UNICODE
+the filesystem then installs generic_ci_d_hash/d_compare on every dentry and
+ovl_dentry_weird() refused any upper or lower dir under /data ("filesystem on
+'...' not supported"), so an OCI runtime in an AOHP env (podman, crun) fell
+back to fuse-overlayfs. The ci ops are exact-match unless the directory itself
+carries the casefold flag, so only refuse dentries that are really casefolded.
+Same direction as mainline 6.13 "ovl: Support case-insensitive filesystems",
+limited to what 5.10 overlayfs needs.
+
+Seen on the Solana Saga (sm8475, encoding UTF-8 12.1.0); the OnePlus 13's
+userdata has no casefold encoding and never hit it. 2026-11-09.
+
+Change-Id: Icca6ff066b6581bf00e36a5f0148f0bde4d13727
+---
+ fs/overlayfs/util.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index ed525ea31ccf..14fec831de1e 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -144,13 +144,29 @@ void ovl_dentry_init_flags(struct dentry *dentry, struct dentry *upperdentry,
+ 
+ bool ovl_dentry_weird(struct dentry *dentry)
+ {
++	unsigned int flags;
++
+ 	if (!d_can_lookup(dentry) && !d_is_file(dentry) && !d_is_symlink(dentry))
+ 		return true;
+ 
+-	return dentry->d_flags & (DCACHE_NEED_AUTOMOUNT |
+-				  DCACHE_MANAGE_TRANSIT |
+-				  DCACHE_OP_HASH |
+-				  DCACHE_OP_COMPARE);
++	flags = dentry->d_flags & (DCACHE_NEED_AUTOMOUNT |
++				   DCACHE_MANAGE_TRANSIT |
++				   DCACHE_OP_HASH |
++				   DCACHE_OP_COMPARE);
++#if IS_ENABLED(CONFIG_UNICODE)
++	/*
++	 * AOHP: a casefold-capable filesystem (Android userdata is formatted
++	 * with the f2fs casefold feature) installs the case-insensitive
++	 * hash/compare ops on every dentry, but generic_ci_d_hash/compare
++	 * fall back to the exact-match behaviour unless the directory itself
++	 * has the casefold flag. Only refuse dentries that are really
++	 * casefolded, so an OCI runtime's overlay storage under /data works.
++	 */
++	if (dentry->d_sb->s_encoding && d_inode(dentry) &&
++	    !IS_CASEFOLDED(d_inode(dentry)))
++		flags &= ~(DCACHE_OP_HASH | DCACHE_OP_COMPARE);
++#endif
++	return flags;
+ }
+ 
+ enum ovl_path_type ovl_path_type(struct dentry *dentry)
+-- 
+2.56.0
+
+

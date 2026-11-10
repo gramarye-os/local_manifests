@@ -1,0 +1,8 @@
+# AOHP (2026-11-09): build the GKI kernel from the aosp/ source checkout instead of taking Google's
+# signed prebuilt Image, so the container options in arch/arm64/configs/gki_defconfig (branch
+# aohp-android14-6.1, see build/kernel/kleaf docs for --kernel_package) and the overlayfs casefold
+# fix reach the Pixel. Lineage's build_kernel runs ./build_raviole.sh which picks this file up.
+build --kernel_package=@//aosp
+build --use_prebuilt_gki=false
+build --use_signed_prebuilts=false
+build --download_prebuilt_gki_fips140=false
