@@ -91,7 +91,8 @@
   <!-- injinj fork: +1 commit adding arch/arm64/configs/vendor/oplus/aohp.config (CONFIG_SYSVIPC, CONFIG_POSIX_MQUEUE) on LineageOS lineage-23.2 -->
   <project path="kernel/oneplus/sm8750" name="android_kernel_oneplus_sm8750" remote="injinj" revision="lineage-23.2-aohp" clone-depth="1" />
   <project path="kernel/oneplus/sm8750-devicetrees" name="LineageOS/android_kernel_oneplus_sm8750-devicetrees" remote="github" revision="lineage-23.2" clone-depth="1" />
-  <project path="kernel/oneplus/sm8750-modules" name="LineageOS/android_kernel_oneplus_sm8750-modules" remote="github" revision="lineage-23.2" clone-depth="1" />
+  <!-- sm8750-modules: gramarye-os fork, +1 commit in the oplus charger driver (one Type-C port reset per boot when docked without DisplayPort alt mode) -->
+  <project path="kernel/oneplus/sm8750-modules" name="android_kernel_oneplus_sm8750-modules" remote="injinj" revision="lineage-23.2-aohp" clone-depth="1" />
 
   <!-- Vendor blobs (device.mk: vendor/oneplus/dodge/dodge-vendor.mk; common.mk: vendor/oneplus/sm8750-common/sm8750-common-vendor.mk) -->
   <project path="vendor/oneplus/dodge" name="proprietary_vendor_oneplus_dodge" remote="themuppets" revision="lineage-23.2" clone-depth="1" />
