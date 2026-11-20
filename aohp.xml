@@ -43,6 +43,10 @@
   <project path="device/qcom/sepolicy_vndr/sm8650" name="android_device_qcom_sepolicy_vndr" remote="injinj" revision="lineage-23.2-caf-sm8650-aohp" groups="qcom,lanai-vendor" />
   <remove-project name="LineageOS/android_device_qcom_sepolicy_vndr" path="device/qcom/sepolicy_vndr/sm8750" />
   <project path="device/qcom/sepolicy_vndr/sm8750" name="android_device_qcom_sepolicy_vndr" remote="injinj" revision="lineage-23.2-caf-sm8750-aohp" groups="qcom,pakala-vendor" />
+  <!-- QTI USB HAL: gramarye-os fork, +1 commit: a working switch for moisture detection where the device lets the HAL write
+       /sys/class/qcom-battery/moisture_detection_en (ingot does, in its ueventd.qcom.rc; no change elsewhere) -->
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_usb" />
+  <project path="vendor/qcom/opensource/usb" name="android_vendor_qcom_opensource_usb" remote="injinj" revision="lineage-23.2-aohp" groups="qcom,pakala-vendor" />
 
   <!-- Contacts and Etar: read-only AppFunctions for the agent (findContacts/getContact, findEvents/getEvent/listCalendars). -->
   <remove-project name="LineageOS/android_packages_apps_Contacts" />
