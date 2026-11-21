@@ -28,8 +28,11 @@ git config user.email >/dev/null 2>&1 || git config user.email "build@aohp.inval
 BASE=$(git rev-parse --short HEAD)
 for p in "$PD"/*.patch; do
   [ -e "$p" ] || break
-  subj=$(grep -m1 '^Subject:' "$p" | sed -E 's/^Subject: (\[PATCH[^]]*\] )?//')
-  if git log --format=%s -n 50 | grep -qxF "$subj"; then
+  # git mailinfo gives the whole subject: a long one is wrapped over two lines in the patch file.
+  subj=$(git mailinfo /dev/null /dev/null < "$p" | sed -n 's/^Subject: //p')
+  [ -n "$subj" ] || { echo "kernel-patches: no subject in $(basename "$p")"; exit 1; }
+  have=$(git log --format=%s -n 50)
+  if grep -qxF "$subj" <<<"$have"; then
     echo "kernel-patches: already applied: $subj"; continue
   fi
   echo "kernel-patches: applying $(basename "$p")"
